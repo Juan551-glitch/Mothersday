@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Mother's Day</title>
+    <style>
+        body {
+            background-image: url('flowers.jpg'); /* Replace with an actual background */
+            background-size: cover;
+            background-position: center;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            position: relative;
+        }
+        .movement-box {
+            position: absolute;
+            width: 400px; /* Size of the box */
+            height: 400px;
+            border: 2px dashed pink;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .button-container {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 140px;
+            height: 140px;
+        }
+        .pulse-button {
+            width: 80px;
+            height: 80px;
+            background-color: pink;
+            color: white;
+            font-size: 16px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 15px pink;
+            animation: pulse 1.5s infinite alternate;
+            position: absolute;
+        }
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+                box-shadow: 0 0 15px pink;
+            }
+            to {
+                transform: scale(1.2);
+                box-shadow: 0 0 25px pink;
+            }
+        }
+        .ring {
+            position: absolute;
+            border: 2px solid pink;
+            border-radius: 50%;
+            animation: orbit 5s infinite linear;
+        }
+        .ring:nth-child(1) {
+            width: 120px;
+            height: 120px;
+            animation-direction: reverse;
+        }
+        .ring:nth-child(2) {
+            width: 140px;
+            height: 140px;
+        }
+        @keyframes orbit {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .message {
+            font-size: 100px;
+            color: white;
+            text-shadow: 0 0 20px pink;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 2s ease-in-out, transform 2s ease-in-out;
+            pointer-events: none;
+        }
+        .glow {
+            animation: glow 1.5s infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 20px pink;
+            }
+            to {
+                text-shadow: 0 0 40px pink, 0 0 60px red;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="movement-box">
+        <div class="button-container" id="buttonContainer">
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <button class="pulse-button" id="pulseButton" onmouseover="moveButton()" onclick="showMessage()">Press Me</button>
+        </div>
+    </div>
+    <div class="message" id="message">Happy Mother's Day!</div>
+
+    <script>
+        let hoverCount = 0;
+
+        function moveButton() {
+            if (hoverCount < 10) {
+                let movementBox = document.querySelector(".movement-box");
+                let buttonContainer = document.getElementById("buttonContainer");
+                let boxWidth = movementBox.clientWidth;
+                let boxHeight = movementBox.clientHeight;
+
+                let randomX = Math.floor(Math.random() * (boxWidth - 140)); // Keep within box
+                let randomY = Math.floor(Math.random() * (boxHeight - 140)); // Keep within box
+
+                buttonContainer.style.transform = `translate(${randomX}px, ${randomY}px)`;
+
+                hoverCount++;
+            }
+        }
+
+        function showMessage() {
+            document.getElementById("pulseButton").style.display = "none";
+            const message = document.getElementById("message");
+
+            message.style.opacity = 1;
+            message.style.transform = "scale(1)";
+            message.classList.add("glow");
+        }
+    </script>
+</body>
+</html>
